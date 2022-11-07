@@ -1,0 +1,60 @@
+{
+    "name": "tekrow/laravel-vue-generator",
+    "description": "Admin CRUD generator using Laravel Jetstream, Inertiajs, Vue.js and Tailwindcss",
+    "keywords": [
+        "tekrow",
+        "laravel-vue-generator"
+    ],
+    "homepage": "https://github.com/tekrow/laravel-vue-generator",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Waqas Ahmed",
+            "email": "t3krow@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "doctrine/dbal": "^3.1",
+        "laravel/framework": "^8|^9",
+        "inertiajs/inertia-laravel": "^0.5",
+        "innocenzi/laravel-vite": "^0.1.7",
+        "laravel/helpers": "^1.4",
+        "laravel/jetstream": "^2.3",
+        "spatie/laravel-permission": "^4.2|^5",
+        "yajra/laravel-datatables": "^1.5"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^v6.0",
+        "phpunit/phpunit": "^9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tekrow\\LaravelVueGenerator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tekrow\\LaravelVueGenerator\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Tekrow\\LaravelVueGenerator\\LaravelVueGeneratorServiceProvider"
+            ],
+            "aliases": {
+                "LaravelVueGenerator": "Tekrow\\LaravelVueGenerator\\LaravelVueGeneratorFacade"
+            }
+        }
+    }
+}
