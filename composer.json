@@ -19,7 +19,7 @@
         "ext-json": "*",
         "doctrine/dbal": "^3.3",
         "inertiajs/inertia-laravel": "^0.6.3",
-        "innocenzi/laravel-vite": "^0.1.7",
+        "innocenzi/laravel-vite": "0.2.*",
         "laravel/framework": "^9.19",
         "laravel/helpers": "^1.4",
         "laravel/jetstream": "^2.12",
