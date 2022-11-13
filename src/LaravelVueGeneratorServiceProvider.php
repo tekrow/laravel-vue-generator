@@ -68,7 +68,7 @@ class LaravelVueGeneratorServiceProvider extends RouteServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('lvg.php'),
-                __DIR__.'/../config/vite.php' => config_path('vite.php'),
+                //__DIR__.'/../config/vite.php' => config_path('vite.php'),
             ], 'lvg-config');
 
             // Publishing the views.

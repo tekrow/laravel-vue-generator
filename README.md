@@ -15,47 +15,23 @@ DONE! In about **2 and a half minutes**, you get a fully working module consisti
 
 What more could you ask for? Cut a day's work down to less than 3 minutes.
 
-## Dependencies
-If you have followed the [Jetstream - Inertia - Vue.js Installation](https://jetstream.laravel.com/2.x/stacks/inertia.html) instructions, then the project will work with minimal configuration.
-Other Important dependencies that you MUST configure include:
-1. [Spatie Laravel Permissions](https://spatie.be/docs/laravel-permission/v4/introduction) - This is used to manage roles and permissions. Its migrations will be published during asset publishing, after which you can go ahead and configure the user trait.
-2. [Laravel Sanctum](https://laravel.com/docs/8.x/sanctum) - Used to manage both API and stateful authentication. Since the whole app will be a Single Page Application, make sure you configure the middleware sanctum middleware in `app/Http/Kernel.php` as follows:
-```php
-'api' => [
-    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-    ...
-],
-```
-## Before You Install:
-- Ensure you have installed `laravel/jetstream` with `inertia`.
 
 ## Installation
-1. You can install the package via composer:
 ```bash
-composer require tekrow/laravel-vue-generator
-```
-> :warning: 1. Before proceeding, ensure you have installed `laravel/jetstream` with `inertia`.
-> 
-> :warning: 2. Step 1 will install spatie/laravel-permission. Ensure you have published migrations for this package to create roles and permissions tables before proceeding.
-
-```shell
+composer create-project laravel/laravel example
+cd example
+composer require laravel/breeze --dev 
+php artisan breeze:install vue
+composer require laravel/jetstream
+php artisan jetstream:install inertia
+composer require spatie/laravel-permission
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+composer require tekrow/laravel-vue-generator
+npm i -D @headlessui/vue popper.js @babel/plugin-syntax-dynamic-import dayjs dotenv numeral postcss postcss-import pusher-js laravel-echo sass sass-loader vue3-vt-notifications vue-flatpickr-component vue-numerals mitt vue-select@beta dynamic-import-polyfill
+php artisan vendor:publish --force --provider="Tekrow\LaravelVueGenerator\LaravelVueGeneratorServiceProvider"
 ```
-> :bulb: NB: The `title` field will be automatically added to the `roles` and `permissions` tables when the first CRUD is generated.
-:::
 
-2. Install the necessary `npm` dev dependencies by running the following command:
-If you are using npm:
-```shell
-npm install --include=dev --legacy-peer-deps @headlessui/vue @inertiajs/inertia @inertiajs/inertia-vue3 @vitejs/plugin-vue popper.js @babel/plugin-syntax-dynamic-import dayjs dotenv numeral postcss postcss-import pusher-js laravel-echo laravel-vite sass sass-loader vite vue@^3.1 vue3-vt-notifications vue-flatpickr-component  vue-numerals mitt vue-select@beta dynamic-import-polyfill
-```
-Or if you are using yarn:
-```shell
-yarn add -D @headlessui/vue @vitejs/plugin-vue @inertiajs/inertia @inertiajs/inertia-vue3 popper.js @babel/plugin-syntax-dynamic-import dayjs dotenv numeral postcss postcss-import pusher-js laravel-echo laravel-vite sass sass-loader vite vue@^3.1 vue3-vt-notifications vue-flatpickr-component  vue-numerals mitt vue-select@beta dynamic-import-polyfill
-```
-Feel free to configure the color palette to your own preference, but for uniformity be sure to include `primary`,`secondary`, `success` and `danger` variants since they are used in the lvg template.
-
-3.  Publish the Package's assets, configs, templates, components and layouts.
+Publish the Package's assets, configs, templates, components and layouts.
    This is necessary for you to get the admin layout and all the vue components used in the generated code:
 
 __Option 1__ (Suitable for fresh installations)
