@@ -90,28 +90,19 @@ SANCTUM_STATEFUL_DOMAINS="${APP_BASE_DOMAIN}"
 ```shell
 php artisan storage:link
 ```
-
-8. Set the `scripts` in your `package.json` as follows:
-```json
-"scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "serve": "vite preview"
-    },
-```
-9. Enable Profile Photos by uncommenting the following line in `config/jetstream.php` under `'features'`:
+8. Enable Profile Photos by uncommenting the following line in `config/jetstream.php` under `'features'`:
 ```php
 Features::profilePhotos(),
 ```
-10. Run Migrations and Seeders
+9. Run Migrations and Seeders
 ```shell
 php artisan migrate
 php artisan db:seed --class SeedAdminRoleAndUser
 ```
-11. Now build the npm dependencies using `vitejs`:
+10. Now build the npm dependencies using `vitejs`:
 ```sh
-yarn dev #Start the vitejs development server
-yarn build #build assets for production
+npm run dev #Start the vitejs development server
+npm run build #build assets for production
 
 ```
 
