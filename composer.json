@@ -31,7 +31,8 @@
         "spatie/laravel-permission": "^5.5",
         "tightenco/ziggy": "^1.0",
         "tekrow/laravel-prime-datatables": "dev-main",
-        "maatwebsite/excel": "^3.1"
+        "maatwebsite/excel": "^3.1",
+        "psr/simple-cache": "^2.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
