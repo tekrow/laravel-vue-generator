@@ -22,7 +22,7 @@
         "php": "^8.0|^8.1",
         "doctrine/dbal": "^3.3",
         "illuminate/support": "^9.2",
-        "inertiajs/inertia-laravel": "^0.5",
+        "inertiajs/inertia-laravel": "^0.6.4",
         "laravel/breeze": "^v1.8",
         "laravel/framework": "^v9.5.1",
         "laravel/sanctum": "^2.14",
