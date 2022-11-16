@@ -26,7 +26,7 @@ lvg will be installed as a separate modular component, with its own frontend ass
 To install through Composer, by run the following command:
 
 ```bash
-composer require Tekrow/lvg -W
+composer require tekrow/lvg -W
 ```
 
 By default, the Lvg's classes are not loaded automatically.
