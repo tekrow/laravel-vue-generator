@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "vue-select/src/scss/vue-select.scss";
+@import "vue-select/dist/vue-select.css";
 
 .loader {
     text-align: center;
