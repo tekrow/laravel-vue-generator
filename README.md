@@ -63,7 +63,6 @@ php artisan lvg:seed
 To run compiler
 ```bash
 cd lvg
-npm run dev #to watch assets
 ```
 To watch assets
 ```bash
@@ -76,9 +75,17 @@ npm run build
 ```
 **Tip: The destination of the built assets is in public/vendor/lvg and the folder is cleared first with each build
 
+By default the user generated has no role assigned to assign it superadmin permissions
+
+```bash
+php artisan lvg:assign-role "admin@tekrow.com" "administrator"
+```
+
+Open the admin at localhost:8000/admin (or whatever your domain is)
+
 Now you can login using these details
 
-Username: `admin@tekrow.com`<br>
+Username: `admin@tekrow.com`
 Password: `password`
 
 During the installation step, the lvg config file is published to config/lvg.php. It has the following among other configs:

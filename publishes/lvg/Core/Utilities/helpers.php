@@ -19,7 +19,7 @@ if (!function_exists('vite_assets')) {
                          ?string $publicBasePath = 'vendor/lvg'): HtmlString
     {
         $devServerIsRunning = false;
-        $devServer = (env("APP_URL",'localhost') . ":3000");
+        $devServer = (env("APP_URL",'http://localhost') . ":3000");
         if (app()->environment('local')) {
             try {
                 Http::get($devServer);

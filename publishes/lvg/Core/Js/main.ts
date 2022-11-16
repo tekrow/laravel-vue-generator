@@ -32,7 +32,7 @@ createInertiaApp({
     resolve: async name => {
         // @ts-ignore
         const pages = import.meta.glob('./../../**/*.vue'); // the /lvg folder
-        return (await pages[`./../../Core/Js/Pages/${name}.vue`]()).default;
+        return (await pages[`./../../${name}.vue`]()).default;
     },
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
