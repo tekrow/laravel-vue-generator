@@ -26,7 +26,7 @@ lvg will be installed as a separate modular component, with its own frontend ass
 To install through Composer, by run the following command:
 
 ```bash
-composer require tekrow/lvg -W
+composer require tekrow/laravel-vue-generator -W
 ```
 
 By default, the Lvg's classes are not loaded automatically.
