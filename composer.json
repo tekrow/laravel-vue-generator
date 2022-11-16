@@ -1,5 +1,5 @@
 {
-    "name": "Tekrow/lvg",
+    "name": "tekrow/lvg",
     "description": "Modular Backend Code Generator for laravel 9.2, Vue.js 3.x and Tailwindcss 3.x inspired.",
     "keywords": [
         "modules",
