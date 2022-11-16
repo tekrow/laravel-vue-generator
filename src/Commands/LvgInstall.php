@@ -99,7 +99,7 @@ class LvgInstall extends Command
             $this->call('breeze:install');
         }
         $this->info("Attempt to install the app's npm dependencies");
-        Helpers::runShellCommand("npm install && npm run prod", $this);
+        Helpers::runShellCommand("npm install && npm run build", $this);
         $this->info("Attempt to install lvg's npm dependencies");
         Helpers::runShellCommand("cd lvg && npm install && npm run build", $this);
         $this->alert('Installation Complete');
