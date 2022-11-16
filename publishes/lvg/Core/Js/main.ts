@@ -1,7 +1,7 @@
 import "@/bootstrap";
 import PrimeVue from "primevue/config";
 import ConfirmationService from 'primevue/confirmationservice';
-import ToastService from "primevue/toastservice"
+import ToastService from "primevue/toastservice";
 import '~/css/app.css';
 import '~/css/style.scss';
 // import "primevue/resources/themes/tailwind-light/theme.css";
@@ -32,7 +32,7 @@ createInertiaApp({
     resolve: async name => {
         // @ts-ignore
         const pages = import.meta.glob('./../../**/*.vue'); // the /lvg folder
-        return (await pages[`./../../${name}.vue`]()).default;
+        return (await pages[`./../../Core/Js/Pages/${name}.vue`]()).default;
     },
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })

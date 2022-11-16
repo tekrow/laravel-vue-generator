@@ -19,7 +19,7 @@ if (!function_exists('vite_assets')) {
                          ?string $publicBasePath = 'vendor/lvg'): HtmlString
     {
         $devServerIsRunning = false;
-
+        $devServer = (env("APP_URL",'localhost') . ":3000");
         if (app()->environment('local')) {
             try {
                 Http::get($devServer);
@@ -75,9 +75,9 @@ if (!function_exists("prepare_menu")) {
                 $module = Module::find($mod);
             }
             return (app()->environment('production')
-                && $mod
-                && in_array($mod, $devModules)
-                && $module) || !$item->active;
+                    && $mod
+                    && in_array($mod, $devModules)
+                    && $module) || !$item->active;
         })->map(function (LvgMenu $item) {
             $item->has_children = !!$item->children()->count();
             if ($item->has_children) {
@@ -119,7 +119,7 @@ if (!function_exists("get_default_html_field")) {
             return FormFields::SECRET;
         }
         return match ($dbColumnType) {
-            "boolean", "bool", "tinyinteger" => FormFields::SWITCH,
+        "boolean", "bool", "tinyinteger" => FormFields::SWITCH,
             "text", "longtext" => FormFields::TEXTAREA,
             "float", "double", "integer", "int", "bigint" => FormFields::NUMBER,
             "date" => FormFields::DATE,
