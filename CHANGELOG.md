@@ -1,5 +1,5 @@
 # Changelog
 
-All Notable changes to `lvg-generator` will be documented in this file.
+All Notable changes to `laravel-vue-generator` will be documented in this file.
 
 ## Next

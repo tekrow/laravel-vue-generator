@@ -11,7 +11,7 @@ use Tekrow\Lvg\Module;
 class LvgV6Migrator extends Command
 {
     protected $name = 'lvg:v6:migrate';
-    protected $description = 'Migrate lvg-generator v5 modules statuses to v6.';
+    protected $description = 'Migrate laravel-vue-generator v5 modules statuses to v6.';
 
     public function handle() : int
     {

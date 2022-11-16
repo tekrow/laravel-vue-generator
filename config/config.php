@@ -68,7 +68,7 @@ return [
 
     'stubs' => [
         'enabled' => true,
-        'path' => base_path() . '/vendor/Tekrow/lvg-generator/src/Commands/stubs',
+        'path' => base_path() . '/vendor/tekrow/laravel-vue-generator/src/Commands/stubs',
         'files' => [
             'routes/web' => 'Routes/web.php',
             'routes/api' => 'Routes/api.php',
@@ -315,7 +315,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Choose what lvg-generator will register as custom namespaces.
+    | Choose what laravel-vue-generator will register as custom namespaces.
     | Setting one to false will require you to register that part
     | in your own Service Provider class.
     |--------------------------------------------------------------------------
