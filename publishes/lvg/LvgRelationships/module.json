@@ -1,0 +1,13 @@
+{
+    "name": "LvgRelationships",
+    "alias": "lvg-relationships",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Lvg\\LvgRelationships\\Providers\\RelationshipsServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

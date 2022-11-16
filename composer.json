@@ -1,59 +1,78 @@
 {
-    "name": "tekrow/laravel-vue-generator",
-    "description": "Admin CRUD generator using Laravel Jetstream, Inertiajs, Vue.js and Tailwindcss",
+    "name": "Tekrow/lvg",
+    "description": "Modular Backend Code Generator for laravel 9.2, Vue.js 3.x and Tailwindcss 3.x inspired.",
     "keywords": [
-        "tekrow",
-        "laravel-vue-generator"
+        "modules",
+        "laravel",
+        "Tekrow",
+        "module",
+        "generator",
+        "crud"
     ],
-    "homepage": "https://github.com/tekrow/laravel-vue-generator",
     "license": "MIT",
-    "type": "library",
     "authors": [
         {
             "name": "Waqas Ahmed",
-            "email": "t3krow@gmail.com"
+            "email": "t3krow@gmail.com",
+            "homepage": "https://github.com/tekrow/",
+            "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.0|^8.1",
-        "ext-json": "*",
         "doctrine/dbal": "^3.3",
-        "inertiajs/inertia-laravel": "^0.6.3",
-        "laravel/framework": "^9.19",
-        "laravel/helpers": "^1.4",
-        "laravel/jetstream": "^2.12",
-        "spatie/laravel-permission": "^5",
-        "yajra/laravel-datatables": "^9.0"
+        "illuminate/support": "^9.2",
+        "inertiajs/inertia-laravel": "^0.5",
+        "laravel/breeze": "^v1.8",
+        "laravel/framework": "^v9.5.1",
+        "laravel/sanctum": "^2.14",
+        "laravel/scout": "^9.4",
+        "laravel/tinker": "^v2.7",
+        "maatwebsite/excel": "^3.1.37",
+        "Tekrow/primevue-datatables": "^v1.3",
+        "spatie/laravel-permission": "^5.5",
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^7.11",
-        "phpunit/phpunit": "^9.4"
+        "barryvdh/laravel-ide-helper": "^2.12",
+        "orchestra/testbench": "^v7.0.0",
+        "phpunit/phpunit": "^9",
+        "mockery/mockery": "~1.0",
+        "spatie/phpunit-snapshot-assertions": "^4.2.10",
+        "phpstan/phpstan": "^1.4.6"
     },
     "autoload": {
         "psr-4": {
-            "Tekrow\\LaravelVueGenerator\\": "src"
-        }
+            "Tekrow\\Lvg\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Tekrow\\LaravelVueGenerator\\Tests\\": "tests"
+            "Tekrow\\Lvg\\Tests\\": "tests"
         }
-    },
-    "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-    },
-    "config": {
-        "sort-packages": true
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Tekrow\\LaravelVueGenerator\\LaravelVueGeneratorServiceProvider"
+                "Tekrow\\Lvg\\LvgServiceProvider"
             ],
             "aliases": {
-                "LaravelVueGenerator": "Tekrow\\LaravelVueGenerator\\LaravelVueGeneratorFacade"
+                "Module": "Tekrow\\Lvg\\Facades\\Module"
             }
+        },
+        "branch-alias": {
+            "dev-main": "1.0-dev"
         }
-    }
+    },
+    "scripts": {
+        "update-snapshots": "./vendor/bin/phpunit --no-coverage -d --update-snapshots",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --debug --coverage-html coverage",
+        "pcf": "vendor/bin/php-cs-fixer fix --verbose"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

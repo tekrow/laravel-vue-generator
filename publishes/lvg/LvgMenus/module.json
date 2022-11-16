@@ -1,0 +1,11 @@
+{
+    "name": "LvgMenus",
+    "alias": "lvg-menus",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": ["Lvg\\LvgMenus\\Providers\\MenusServiceProvider"],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

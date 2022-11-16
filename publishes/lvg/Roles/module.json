@@ -1,0 +1,11 @@
+{
+    "name": "Roles",
+    "alias": "roles",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": ["Lvg\\Roles\\Providers\\RolesServiceProvider"],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

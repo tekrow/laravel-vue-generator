@@ -1,0 +1,11 @@
+{
+    "name": "Permissions",
+    "alias": "permissions",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": ["Lvg\\Permissions\\Providers\\PermissionsServiceProvider"],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

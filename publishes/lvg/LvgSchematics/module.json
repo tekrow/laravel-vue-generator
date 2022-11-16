@@ -1,0 +1,11 @@
+{
+    "name": "LvgSchematics",
+    "alias": "lvg-schematics",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": ["Lvg\\LvgSchematics\\Providers\\SchematicsServiceProvider"],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

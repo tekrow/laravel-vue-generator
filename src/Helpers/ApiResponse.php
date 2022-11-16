@@ -1,22 +1,24 @@
 <?php
 
+namespace Tekrow\Lvg\Helpers;
 
-namespace Tekrow\LaravelVueGenerator\Helpers;
-
-
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Collection;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\HeaderBag;
 
 class ApiResponse
 {
-    private $success=true, $message="Request Successful.", $payload=[], $code, $headers=[];
+    private int $code = 200;
+    private array|HeaderBag $headers=[];
+    private mixed $payload=[];
+    private bool $success=true;
+    private string $message="Request Successful.";
 
     /**
      * The operation was successful.
      * @return ApiResponse
      */
-    public function success() {
+    public function success(): static
+    {
         $this->success = true;
         if (!$this->code) {
             $this->code = 200;
@@ -28,7 +30,8 @@ class ApiResponse
      * The operation was not successful, we are returning an error
      * @return ApiResponse
      */
-    public function failed() {
+    public function failed(): static
+    {
         $this->success = false;
         if (!$this->code) {
             $this->code = 500;
@@ -41,7 +44,8 @@ class ApiResponse
      * @param string $message
      * @return ApiResponse
      */
-    public function message($message="") {
+    public function message(string $message=""): static
+    {
         $this->message = $message;
         return $this;
     }
@@ -51,7 +55,8 @@ class ApiResponse
      * @param $payload | The data to send to the client
      * @return ApiResponse
      */
-    public function payload($payload) {
+    public function payload($payload): static
+    {
         $this->payload = $payload;
         return $this;
     }
@@ -61,7 +66,8 @@ class ApiResponse
      * @param int $httpCode
      * @return ApiResponse
      */
-    public function code($httpCode=200) {
+    public function code(int $httpCode = 200): static
+    {
         $this->code = $httpCode;
         return $this;
     }
@@ -69,12 +75,15 @@ class ApiResponse
     /**
      * Set custom response headers if necessary
      * @param array|HeaderBag $headers
+     * @return ApiResponse
      */
-    public function headers($headers) {
+    public function headers(array|HeaderBag $headers): static
+    {
         $this->headers = $headers;
         return $this;
     }
-    public function send() {
+    public function send(): JsonResponse
+    {
         return response()->json([
             "success" => $this->success,
             "message" => $this->message,

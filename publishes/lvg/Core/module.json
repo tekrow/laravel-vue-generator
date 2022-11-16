@@ -1,0 +1,17 @@
+{
+    "author": "Waqas Ahmed <t3krow@gmail.com>",
+    "title": "Core",
+    "name": "Core",
+    "alias": "core",
+    "description": "Lvg's core module",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Lvg\\Core\\Providers\\LvgServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        "Utilities/helpers.php"
+    ],
+    "requires": []
+}

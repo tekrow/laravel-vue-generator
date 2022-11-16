@@ -1,0 +1,21 @@
+{
+    "name": "Tekrow/users",
+    "description": "",
+    "authors": [
+        {
+            "name": "Waqas Ahmed",
+            "email": "t3krow@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {}
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Lvg\\Users\\": ""
+        }
+    }
+}

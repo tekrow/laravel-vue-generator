@@ -1,0 +1,11 @@
+{
+    "name": "LvgFields",
+    "alias": "lvg-fields",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": ["Lvg\\LvgFields\\Providers\\FieldsServiceProvider"],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

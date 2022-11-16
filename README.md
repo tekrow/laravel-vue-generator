@@ -1,234 +1,237 @@
-* With this package, just run `php artisan lvg:generate articles`
-* Build your css and javascript (About **27 seconds**)
-DONE! In about **2 and a half minutes**, you get a fully working module consisting of -:
-- Model
-- Admin Controller - Index, Create, Show, Edit, Store, Update, Delete
-- API Controller - Index, Store, Show, Update, Delete
-- An Authorization Policy - viewAny, view, create, update, delete, restore, forceDelete
-- Generated Permissions for [spatie/laravel-permissions](https://spatie.be/docs/laravel-permission/v4/introduction) - articles, articles.index, articles.create, articles.show, articles.edit, articles.delete
-- Frontend Menu entry
-- Frontend Datatable with Actions thanks to Using Yajra Datatables and datatables.net
-- Tailwindcss-powered CREATE and EDIT forms,
-- Tailwindcss - powered SHOW view.
-- web and API routes
-- Validation and Authorization Request Classes
+# lvg
 
-What more could you ask for? Cut a day's work down to less than 3 minutes.
-
-
-## Installation
+Backend Modular Code and CRUD generator for Laravel 9.
+The code is generated in the following stack:
+* Laravel ^9
+* Inertia.js
+* Laravel Breeze & Sanctum
+* Vue.js ^3
+* Tailwindcss ^3
+* PrimeVue ^3.11
+## Before Installation
+Before you begin installation, you have to prepare your laravel app by installing the following:
+1. Install and Configure Laravel Sanctum [Follow these Steps](https://laravel.com/docs/9.x/sanctum#installation)
 ```bash
-composer create-project laravel/laravel example
-cd example
-composer require laravel/breeze --dev 
-php artisan breeze:install vue
-composer require laravel/jetstream
-php artisan jetstream:install inertia
-composer require spatie/laravel-permission
-php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
-composer require tekrow/laravel-vue-generator
-npm i -D @headlessui/vue popper.js @babel/plugin-syntax-dynamic-import dayjs dotenv numeral postcss postcss-import pusher-js laravel-echo sass sass-loader vue3-vt-notifications vue-flatpickr-component vue-numerals mitt vue-select@beta dynamic-import-polyfill
-php artisan vendor:publish --force --provider="Tekrow\LaravelVueGenerator\LaravelVueGeneratorServiceProvider"
-```
-
-Publish the Package's assets, configs, templates, components and layouts.
-   This is necessary for you to get the admin layout and all the vue components used in the generated code:
-
-__Option 1__ (Suitable for fresh installations)
-```shell
-php artisan vendor:publish --force --provider="Tekrow\LaravelVueGenerator\LaravelVueGeneratorServiceProvider"
-```
-
-__Option 2__ (Useful if you are upgrading the package or already have local changes you don't want to override.)
-NB: If you only want to update some published files, delete only the published files that you want to update, then run the appropriate command below:
-```shell
-php artisan vendor:publish --tag=lvg-blade-templates #Publishes resources/views/app.blade.php. If it already exists, use --force to replace it
-php artisan vendor:publish --tag=lvg-config #Publishes the config file. If it exists use --force to replace it.
-php artisan vendor:publish --tag=lvg-routes #Publishes routes/lvg.php to hold routes for generated modules.If you have already generated some routes, be sure to back them up as this file will be reset if you --force it.
-php artisan vendor:publish --tag=lvg-views #publishes Vue Components, app.js, bootstrap.js and Layout files. Use --force to force replace
-php artisan vendor:publish --tag=lvg-scripts #publishes main.ts and Layout files. Use --force to force replace
-php artisan vendor:publish --tag=lvg-css #publishes app.css. Use --force to force replace
-php artisan vendor:publish --tag=lvg-assets #publishes logos and other assets
-php artisan vendor:publish --tag=lvg-compiler-configs #publishes postcss.config.js,vite.config.js, tsconfig.json and tailwind.config.js
-php artisan vendor:publish --tag=lvg-seeders #Publish database Seeders
-```
-4. Add the `LvgMiddleware` to the `web` middleware group in `app/Http/Kernel.php`:
-```php
-protected $middlewareGroups = [
-    'web' => [
-        ...,
-        \Tekrow\LaravelVueGenerator\Middleware\LvgMiddleware::class,
-    ],
-];
-```
-5. Allow First-Party access to the Sanctum API by adding the following to the `api` middleware group in `app/Http/Kernel.php`
-```php
-protected $middlewareGroups = [
-    'api' => [
-        \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-        ...
-    ],
-];
-```
-6. Modify the .env to have the following keys:
-```env
-APP_BASE_DOMAIN=mydomain.test
-# or https
-APP_SCHEME=http
-#optional mix_app_uri (The path under which the app will be served. It is recommended to run the app from the root of the domain.
-MIX_APP_URI= 
-#If MIX_APP_URI is empty.
-APP_URL=${APP_SCHEME}://${APP_BASE_DOMAIN} 
-#If MIX_APP_URI is not empty.
-#APP_URL=${APP_SCHEME}://${APP_BASE_DOMAIN}/${MIX_APP_URI}
-
-# Append the following key to your .env to allow 1st party consumption of your api:
-#You can add other comma separated domains
-SANCTUM_STATEFUL_DOMAINS="${APP_BASE_DOMAIN}"
-```
-7. create the storage:link (See laravel documentation) to allow access to the public disk assets (e.g logos) via web:
-```shell
-php artisan storage:link
-```
-8. Enable Profile Photos by uncommenting the following line in `config/jetstream.php` under `'features'`:
-```php
-Features::profilePhotos(),
-```
-9. Run Migrations and Seeders
-```shell
-php artisan migrate
-php artisan db:seed --class SeedAdminRoleAndUser
-```
-10. Now build the npm dependencies using `vitejs`:
-```sh
-npm run dev #Start the vitejs development server
-npm run build #build assets for production
 
 ```
+2. Install and configure Laravel Breeze as the authentication package [Follow these steps](https://laravel.com/docs/9.x/starter-kits#laravel-breeze-installation)
+3. Install and configure `spatie/laravel-permission`. [Follow these Steps](https://spatie.be/docs/laravel-permission/v5/installation-laravel)
+4. Install and configure `laravel/scout`. By default, lvg will try to configure the basic `database` driver for scout during installation. [Follow Scout Installation steps](https://laravel.com/docs/9.x/scout#installation)
 
-## Usage
-### The initial seeded admin user and role
-When you run `php artisan vendor:publish --tag=lvg-migrations`, a migration is published that creates an initial default user called `Administrator` and a role with the name `administrator` to enable you gain access to the system with admin privileges. The credentials for the user account are:
-* Email: **admin@tekrow.com**
-* Password: **password**
+Now you are ready to install Lvg!
+lvg will be installed as a separate modular component, with its own frontend assets and even compilation process using vite.js, all separate from your main app, allowing you to even mix two frontend stacks together!
 
-Use these creds after migration to login and explore all parts of the application
+## Install
 
-### Create the Permissions, Roles and Users Modules first, in that order:
-Run the following commands to generate the User Access Control Module before proceeding to generate your admin:
-```shell
-php artisan lvg:generate:permission -f
-php artisan lvg:generate:role -f
-php artisan lvg:generate:user -f
-```
-You can now proceed to generate any other CRUD you want using the steps in the following section.
-### General Steps to generate a CRUD:
-1. Generate and write a migration for your table with `php artisan make:migration` command.
-2. Run the migration to the database with `php artisan migrate` command
-3. Generate the Whole Admin Scaffold for the module with `php artisan lvg:generate` command
-4. Modify and customize the generated code to suit your specific requirements if necessary.
-__NB: If the crud already exists, and you would like to generate, you can use the `-f` or `--force` option to force replacement of files.
-### Example
-Assuming you want to generate a `books` table:
-```shell
-php artisan make:migration create_books_table
+To install through Composer, by run the following command:
+
+```bash
+composer require Tekrow/lvg -W
 ```
 
+By default, the Lvg's classes are not loaded automatically.
+Before proceeding with installation, autoload the Lvg namespace and backend modules using `psr-4` by adding the following to your app's composer.json:
 
-* Open your migration and modify it as necessary, adding your fields. After that, run the migration.
-```shell
-php artisan migrate
-```
-* __The Fun Part:__ Scaffold a whole admin module for books with lvg using the following command:
-```shell
-php artisan lvg:generate books #Format: php artisan generate [table_name] [-f]
-```
-__NB:__ To get a full list of `lvg` commands called under the hood and the full description of the `lvg:generate` command, you can run the following: 
-```shell
-php artisan lvg --help
-php artisan lvg:generate --help
-```
-The command above will generate a number of files and add routes to both your `api.php` and `web.php` route files. It will also append menu entries to the published `Menus.json` file.
-The generated vue files are placed under the Pages/Books folder in the js folder.
-
-* Finally, run `yarn dev or yarn build` to compile the assets. There you have your CRUD.
-## Roles, permissions and Sidebar Menu:
-* By Default, generation of a module generates the following permissions:
-    - index
-    - create
-    - show
-    - edit
-    - delete
-    
-* The naming convention for permissions is ${module-name}.${perm} e.g payments.index, users.create etc.
-* This package manages access control using policies. Each generated module generates a policy with the default laravel actions:
-    - viewAny, view, store, update, delete, restore, forceDelete
-  The permissions generated above are checked in these policies. If you need to modify any of the access permissions, policies is where to look.
-      
-* Special permissions MUST also be generated to control access to the sidebar menus. These permissions SHOULD NOT contain two parts separated with a dot, but only one part.
-* Menus are configured in a json file published at `./resources/js/Layouts/Lvg/Menu.json`. 
-    - For all menu items, the json key MUST match the permision that controls that menu. A permission without any verb is generated when generating each module for this very purpose. For example, generating a `payments` module will generate a `payments` permission.
-      Then the menu for payments must have `payments` as the json key.
-    - For parent menus and any other menus which may not match any module, you have to create a permission with the key name to control its access. For example, if you have a parent menu called `master-data` you have to generate a permission with the same name.
-
-## Components Documentation
-### Datatables
-LVG is built on top of datatables.net and is fully server-side rendered using [Yajra Datatables](https://yajrabox.com/docs/laravel-datatables/master/introduction). Most of the logic resides inside `App\Repositories` and in the respective Repository file, there is a method called `dtColumns` which is used to fully control the columns shown in the Index page.
-
-For example, in order to control the columns shown for the Users Datatable, the following is the `dtColumns` method under `App\Repositories\Users.php`:
-```php
-public static function dtColumns(): array
-    {
-        return [
-            Column::make('id')->title('ID')->className('all text-right'),
-            Column::make("name")->className('all'),
-            Column::make("first_name")->className('none'),
-            Column::make("last_name")->className('none'),
-            Column::make("middle_name")->className('none'),
-            Column::make("username")->className('min-desktop-lg'),
-            Column::make("email")->className('min-desktop-lg'),
-            Column::make("gender")->className('min-desktop-lg'),
-            Column::make("dob")->className('none'),
-            //Column::make("email_verified_at")->className('min-desktop-lg'),
-            Column::make("activated")->className('min-desktop-lg'),
-            Column::make("created_at")->className('min-tv'),
-            Column::make("updated_at")->className('min-tv'),
-            Column::make('actions')->className('min-desktop text-right')->orderable(false)->searchable(false),
-        ];
+``` json
+{
+  "autoload": {
+    "psr-4": {
+        "App\\": "app/",
+        "Database\\Factories\\": "database/factories/",
+        "Database\\Seeders\\": "database/seeders/",
+        "Lvg\\": "lvg/"
     }
-```
-**NOTE: In order to omit the `email_verified_at` class from my Index columns all I had to do is comment it out (or better yet, just remove it from the list of columns!)**
-
-The datatables are also responsive by default (Checkout https://datatables.net/extensions/responsive/ for more details). For this purpose, you can use one of the following lvg-provided responsive breakpoints to automatically collapse the column below a given screen size. For info on how to use the class logic, checkout the [Class Logic Documentation](https://datatables.net/extensions/responsive/classes). Most of the time I only use `min-`, e.g `min-desktop-l`
-```ts
-breakpoints: [
-        { name: "tv", width: Infinity },
-        { name: "desktop-l", width: 1536 },
-        { name: "desktop", width: 1280 },
-        { name: "tablet-l", width: 1024 },
-        { name: "tablet-p", width: 768 },
-        { name: "mobile-l", width: 480 },
-        { name: "mobile-p", width: 320 },
-    ],
+  }
 }
 ```
-Checkout the first snippet on how I have used the responsive classes!
+**Tip: don't forget to run `composer dump-autoload` afterwards.**
 
+The package will automatically register its service providers.
+Then install the necessary files for code generation and backend by running:
 
-### Testing
+```bash
+php artisan lvg:install
+```
+**Tip: If you would like to force the replacement of existing Lvg files, add the --force option to the command above**
+From here, you are ready to generate code and interact with your new backend.
 
-``` bash
-composer test
+Run the seeders for all modules. This is necessary in order to have the default Administrator role and user seeded. Without this step you won't be able to login immediately.
+```bash
+php artisan lvg:seed
 ```
 
-## Contributing
+To run compiler
+```bash
+cd lvg
+npm run dev #to watch assets
+```
+To watch assets
+```bash
+npm run dev
+```
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+To build the assets for production
+```bash
+npm run build
+```
+**Tip: The destination of the built assets is in public/vendor/lvg and the folder is cleared first with each build
 
-## Credits
-All credit goes to [Original Developers](https://github.com/savannabits)
-I just needed to modify may be use vuetify and keep it updated as they have shifted to the development of [Acacia](https://github.com/savannabits/acacia)
+Now you can login using these details
 
-## License
+Username: `admin@tekrow.com`<br>
+Password: `password`
 
-Do whatever you want no license required
+During the installation step, the lvg config file is published to config/lvg.php. It has the following among other configs:
+
+* lvg.route_prefix - allows you to define the uri under which the backend can be accessed. By default it is admin. You can change this by setting the env variable LVG_ROUTE_PREFIX
+* lvg.sidebar.heading - Allows you to define the sidebar heading displayed above the backend's sidebar. You can change this by setting the env key LVG_SIDEBAR_HEADING
+* lvg.dev_modules - It lists the modules that should not be available when the app is in production.
+
+you can access it on domain/admin
+
+### Module Structure
+The modular structure of this package's generated code is heavily inspired by [nwidart/laravel-modules](https://nwidart.com/laravel-modules/v6/introduction). In fact, the generated modules are almost similar, with only slight differences in the folder structure.
+Folder
+
+**ModuleName/**
+
+Parent folder for the module the module. Each CRUD generated will be created as a separate module.  
+The module name takes the plural Pascal case form of the table name. E.g if the table name is `user_types` the module name hence the folder name will be `UserTypes`
+
+**Config/**
+
+Holds the module's configuration files
+
+**Console/**
+
+Holds the module's console commands
+
+**Database/**
+
+Holds the module's migrations, factories and seeders
+
+**Http/**
+
+Holds the module's controllers, middleware and requests.  
+Validation and Authorization are done within Request classes. Currently the generated request classes include `IndexRequest`,`ViewRequest`,`StoreRequest`,`UpdateRequest`,`DestroyRequest` and `DtRequest` for the datatable.  
+There are two generated controllers: the `web` controller and the `api` controller
+
+**Js/**
+
+Holds the module's javascript assets. These are mainly `Vue.js 3` components and pages.  
+The backend uses `Inertia.js` to handle requests from Vue.js pages. If you need to customize your UI, this is mostly where you will dwell in after code generation.  
+Most of the common layout and component files are located in the `Core` module inside the `Js` folder, which you will find aliased as `@/` to other components
+
+**Models/**
+
+Holds the models for the module. Only one main Model will be generated per module. You can add more models in the same module if you like.
+
+**Policies/**
+
+Holds the Authorization logic for the module. Only one main Authorization policy is generated. The policies have been configured to check the available permissions from `laravel-permission`.
+
+**Providers/**
+
+Holds the module's Main Service Provider and any other Service Providers for the module
+
+**Repositories/**
+
+Holds the Repositories for the module. Only one Repository is initially generated but you can create more. The `Repository` class holds all the logic for the CRUD. The work of controllers is merely to receive validated and authorized user input, pass the input to the Repository and return a response to the user after the action is completed.
+
+**resources/**
+
+This is used to load the module's blade views and other modular assets just in case you may want to extend the module. Currently it is not in use, but it was retained from `nwidart/laravel-module`'s design.
+
+**Routes/**
+
+This contains the module's routes. There are two separate route files: `api.php` and `web.php` You can read more in the Routing Section.
+
+**tests/**
+
+Holds the module's Unit and Feature tests. Currently, tests are not generated yet.
+
+**composer.json**
+
+This is the module's composer definition
+
+**module.json**
+
+This is the module's definition file.
+
+**package.json**
+
+The module's `package.json` just in case you want to extend the module with other dependencies. These are compiled by running the module's `webpack.mix`
+
+**webpack.mix.js**
+
+The module's `webpack.mix` file to be used for compiling the `assets` inside the `resources` folder. This is not used in the generated code, but it felt right to still maintain it from `nwidart/laravel-modules'` structure.
+
+**package.json**
+
+Inside `lvg/`, this is the main npm dependencies definition file. Most of these dependencies are the ones used in the `Core` module, hence shared with all the other modules.
+
+**package-lock.json**
+
+The lock file for the main `package.json` file
+
+**tailwind.config.ts**
+
+The main `tailwindcss` configuration file. If you would like to change your theme colors or any other tailwindcss settings, this is the place to do it.
+
+**tsconfig.json**
+
+All the `Vue` pages are written in `typescript`. This is the main `typescript config` file for development
+
+**vite.config.ts**
+
+The backend assets are compiled using `vite.js`. This is the main `vite config` file.
+
+### Basic Usage
+Lvg generates code based on an existing database. If the database does not exist yet, the first step is to write and run migrations. To better illustrate, we will be generating one of the CRUDs needed to build a vehicles web app. Let's create an vehicle_types table:
+
+```bash
+php artisan make:migration create_vehicle_types_table
+```
+
+Populate the migration with this content:
+```php
+    Schema::create('vehicle_types', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('slug')->unique();
+        $table->string('name')->unique();
+        $table->text('description')->nullable();
+        $table->boolean('active')->default(true);
+        $table->timestamps();
+    });
+```
+Run the migration
+```bash
+php artisan migrate
+```
+
+### Preparing Schematics
+1. Generate a schematic for the module. The schematic defines the fields and relationships of the module. Later the generation command will use this information when generating the code. You can create the code from the interface, or simply run the following command:
+
+```bash
+php artisan lvg:blueprint vehicle_types
+```
+
+2. Now Generate the code
+```bash
+php artisan lvg:make vehicle_types
+```
+The command will generate the VehicleTypes module, whose files will be under the folder lvg/VehicleTypes/
+
+**Tip:  If the module already exists and you would like to force its replacement, you can specify -F or --force to the lvg:make command.
+
+If the vehicle_types Schematic did not exist, running lvg:make will generate it first before proceeding.
+
+Now to compile and watch the assets
+
+```bash
+cd lvg
+npm run dev
+```
+### License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
